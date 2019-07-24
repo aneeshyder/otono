@@ -13,60 +13,44 @@
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="profile" href="https://gmpg.org/xfn/11">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900">
-	<?php wp_head(); ?>
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+    
+    <?php wp_head(); ?> 
 </head>
 
 <body <?php body_class(); ?>>
 <div id="page" class="site">
-    <div id="navbar" class="navbar navbar-default navbar-page-title">
-        <div class="container">
-            <?php
-            the_custom_logo();
-            ?>
-            <div class="navbar-header">
-                <a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
-            </div>
-            <div class="navbar-responsive-collapse out" aria-expanded="true" style="">
-                <?php
-                $location = 'menu-1';
-                if ( has_nav_menu( $location ) ) {
-                        wp_nav_menu( array(
-                            'theme_location' => $location,
-                            'menu_id'        => 'primary-menu',
-                            'items_wrap' => '<ul class="nav navbar-nav navbar-right">%3$s</ul>'
-                        ) 
-                    );
-                }
-                ?>
-            </div>            
-	        <div class="menu-btn"></div>
+    <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'informative-blogs' ); ?></a>
 
-        </div>
-    </div>
-    <header id="page-title" class="jumbotron background">
+    <header id="masthead" class="site-header fixed-top">
         <div class="container">
-            <div class="horizontal-center vertical-center">
-				<?php if(is_front_page()){ ?>
-						<h1 class="article-title"><?php bloginfo( 'name' ); ?></h1>
-						<?php $otono_description = get_bloginfo( 'description', 'display' );
-						if ( $otono_description || is_customize_preview() ) {?>
-						<h2 class="article-subtitle"><?php echo $otono_description; /* WPCS: xss ok. */ ?></h2>
-				<?php }}
-					elseif(is_archive()){
-						the_archive_title( '<h1 class="article-title">', '</h1>' );
-						the_archive_description( '<h2 class="article-subtitle">', '</div>' );
-					}else{
-					?>
-					<h1 class="article-title"><?php echo get_the_title(); ?></h1>
-					<?php
-					}
-				?>
-            </div>
+            <div class="header-inner">
+                <div class="site-branding">
+                    <?php
+                        the_custom_logo();
+                        if ( is_front_page() && is_home() ) :
+                            ?>
+                            <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+                            <?php
+                        else :
+                            ?>
+                            <p class="site-title h1"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+                            <?php
+                        endif;
+                    ?>
+                </div><!-- .site-branding -->                           
+            </div><!-- .header-inner -->
         </div>
-    </header>
+    </header><!-- #masthead -->
 
-    <div class="container foreground">
+    <div id="content" class="site-content">
+        <div class="main">
+            <div class="container">
+                <?php if ( get_header_image() ) : ?>
+                    <div class="header-image col-lg-12">
+                        <img src="<?php echo esc_url( get_header_image() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'title' ) ); ?>" />
+                    </div>
+                <?php endif; ?>
+
